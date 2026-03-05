@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8-3 - Love Pad</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app app-lock" id="app">
+      <!-- Màn 1: Nhập năm sinh -->
+      <main class="screen screen-lock">
+        <section class="card">
+          <div class="card-photo-frame">
+            <img src="image/image.png" alt="Ảnh kỷ niệm" class="card-photo" />
+          </div>
+
+          <div class="card-heart">
+            <span>♥</span>
+          </div>
+
+          <div class="birth-input-wrapper">
+            <input
+              type="text"
+              maxlength="4"
+              id="birthInput"
+              placeholder="Hãy nhập năm sinh của bạn"
+              class="birth-input"
+              readonly
+            />
+          </div>
+
+          <div class="keypad" id="keypad">
+            <button class="key" data-key="1">1</button>
+            <button class="key" data-key="2">2</button>
+            <button class="key" data-key="3">3</button>
+            <button class="key" data-key="4">4</button>
+            <button class="key" data-key="5">5</button>
+            <button class="key" data-key="6">6</button>
+            <button class="key" data-key="7">7</button>
+            <button class="key" data-key="8">8</button>
+            <button class="key" data-key="9">9</button>
+            <span class="key key-empty"></span>
+            <button class="key key-zero" data-key="0">0</button>
+            <button class="key key-delete" data-action="delete">✕</button>
+          </div>
+        </section>
+      </main>
+
+      <!-- Màn 2: Menu Music / Letter / Image / Gift -->
+      <main class="screen screen-menu">
+        <section class="menu-list">
+          <article class="menu-card" data-open="music">
+            <div class="menu-icon">🎵</div>
+            <div class="menu-label">Music</div>
+          </article>
+
+          <article class="menu-card" data-open="letter">
+            <div class="menu-icon">✉️</div>
+            <div class="menu-label">Letter</div>
+          </article>
+
+          <article class="menu-card" data-open="image">
+            <div class="menu-icon">🖼️</div>
+            <div class="menu-label">Image</div>
+          </article>
+
+          <article class="menu-card" data-open="gift">
+            <div class="menu-icon">🎁</div>
+            <div class="menu-label">Gift</div>
+          </article>
+        </section>
+      </main>
+
+      <!-- Màn 3: Music Player -->
+      <main class="screen screen-music" id="screenMusic">
+        <section class="music-card">
+          <header class="music-header">
+            <div class="music-header-left">
+              <span class="music-header-icon">🎵</span>
+              <span class="music-header-title">MUSIC PLAYER</span>
+            </div>
+            <button class="music-close" id="closeMusic" aria-label="Đóng">
+              ✕
+            </button>
+          </header>
+
+          <div class="music-main">
+            <div class="music-cover-frame">
+              <img
+                src="image/image.png"
+                alt="Ảnh bài hát"
+                class="music-cover"
+                id="musicCover"
+              />
+            </div>
+            <h2 class="music-track-title" id="trackTitle">Ai Ngoài Anh</h2>
+
+            <div class="music-timeline">
+              <span class="music-time" id="currentTime">0:00</span>
+              <div class="music-progress-track">
+                <div class="music-progress" id="musicProgress"></div>
+              </div>
+              <span class="music-time" id="duration">0:00</span>
+            </div>
+
+            <div class="music-controls">
+              <button class="music-btn" id="prevBtn">⏮</button>
+              <button class="music-btn music-btn-play" id="playPauseBtn">
+                ▶
+              </button>
+              <button class="music-btn" id="nextBtn">⏭</button>
+            </div>
+          </div>
+
+          <ul class="music-playlist" id="playlist">
+            <!-- các bài hát sẽ được render bởi JS -->
+          </ul>
+
+          <audio id="audio"></audio>
+        </section>
+      </main>
+
+      <!-- Màn 4: Thư 8-3 -->
+      <main class="screen screen-letter" id="screenLetter">
+        <section class="letter-card">
+          <button class="letter-close" id="closeLetter" aria-label="Đóng thư">
+            ✕
+          </button>
+
+          <div class="letter-inner">
+            <div class="letter-paper">
+              <div class="letter-text">
+                <p id="typingText"></p>
+                <p class="letter-sign" id="typingSign"></p>
+              </div>
+
+              <img
+                src="image/anh-dong-tha-tim-cute.gif"
+                alt="Gif thả tim"
+                class="letter-gif"
+              />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Màn 5: Bộ sưu tập ảnh -->
+      <main class="screen screen-image" id="screenImage">
+        <section class="image-card">
+          <button class="image-close" id="closeImage" aria-label="Đóng ảnh">
+            ✕
+          </button>
+
+          <img
+            src="image/tai-hinh-anh-dong-chu-gau-dang-an-de-thuong.gif"
+            alt="Icon gấu dễ thương"
+            class="image-icon image-icon-top"
+          />
+
+          <img
+            src="image/tai-anh-dong-de-thuong-1-600x600.gif"
+            alt="Icon thỏ dễ thương"
+            class="image-icon image-icon-bottom"
+          />
+
+          <header class="image-header">
+            <div class="image-title-track image-title-track-top">
+              <span class="image-title-text">
+                HAPPY INTERNATIONAL WOMEN'S DAY
+              </span>
+            </div>
+          </header>
+
+          <div class="image-body">
+            <div class="image-rows">
+              <div class="image-row image-row-top">
+                <figure class="image-item">
+                  <img src="image/image copy.png" alt="Ảnh 1" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 3.png" alt="Ảnh 2" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 8.png" alt="Ảnh 3" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 4.png" alt="Ảnh 4" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 4.png" alt="Ảnh 4" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 4.png" alt="Ảnh 4" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 4.png" alt="Ảnh 4" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 4.png" alt="Ảnh 4" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 4.png" alt="Ảnh 4" />
+                </figure>
+              </div>
+              
+              <div class="image-row image-row-bottom">
+                <figure class="image-item">
+                  <img src="image/image copy 5.png" alt="Ảnh 5" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 7.png" alt="Ảnh 6" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy.png" alt="Ảnh 7" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 3.png" alt="Ảnh 8" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 3.png" alt="Ảnh 8" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 3.png" alt="Ảnh 8" />
+                </figure>
+                <figure class="image-item">
+                  <img src="image/image copy 3.png" alt="Ảnh 8" />
+                </figure>
+              </div>
+            </div>
+            <footer class="image-footer">
+              <div class="image-title-track image-title-track-bottom">
+                <span class="image-title-text">
+                  HAPPY INTERNATIONAL WOMEN'S DAY
+                </span>
+              </div>
+            </footer>
+          </div>
+
+          <!-- viewer phóng to ảnh khi click -->
+          <div class="image-viewer" id="imageViewer">
+            <div class="image-viewer-card">
+              <button
+                class="image-viewer-close"
+                id="closeImageViewer"
+                aria-label="Đóng ảnh lớn"
+              >
+                ✕
+              </button>
+              <div class="image-viewer-frame">
+                <img src="" alt="Ảnh xem lớn" id="viewerImage" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Màn 6: Gift - Heart Show -->
+      <main class="screen screen-gift" id="screenGift">
+        <section class="gift-card">
+          <header class="gift-header">
+            <div class="gift-header-actions">
+              <button class="gift-close" id="closeGift" aria-label="Đóng">
+                ✕
+              </button>
+            </div>
+          </header>
+
+          <div class="gift-stage">
+            <canvas id="giftCanvas"></canvas>
+            <div class="gift-ring">
+              <div class="gift-ring-inner">
+                <span>
+                  HAPPY INTERNATIONAL WOMEN'S DAY • HAPPY INTERNATIONAL WOMEN'S
+                  DAY •
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const app = document.getElementById("app");
+      const keypad = document.getElementById("keypad");
+      const birthInput = document.getElementById("birthInput");
+      const progressLock = document.getElementById("progressLock");
+      const progressMenu = document.getElementById("progressMenu");
+      const screenMusic = document.getElementById("screenMusic");
+      const closeMusic = document.getElementById("closeMusic");
+      const screenLetter = document.getElementById("screenLetter");
+      const closeLetter = document.getElementById("closeLetter");
+      const screenImage = document.getElementById("screenImage");
+      const closeImage = document.getElementById("closeImage");
+      const screenGift = document.getElementById("screenGift");
+      const closeGift = document.getElementById("closeGift");
+      const menuCards = document.querySelectorAll(".menu-card");
+
+      const audio = document.getElementById("audio");
+      const trackTitle = document.getElementById("trackTitle");
+      const musicCover = document.getElementById("musicCover");
+      const currentTimeEl = document.getElementById("currentTime");
+      const durationEl = document.getElementById("duration");
+      const musicProgress = document.getElementById("musicProgress");
+      const playPauseBtn = document.getElementById("playPauseBtn");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const playlistEl = document.getElementById("playlist");
+
+      let inputValue = "";
+
+      function createPetalsFromButton(button, count = 8) {
+        const rect = button.getBoundingClientRect();
+
+        for (let i = 0; i < count; i++) {
+          const petal = document.createElement("div");
+          petal.classList.add("petal");
+
+          // Vị trí bắt đầu = giữa nút vừa bấm
+          const startX = rect.left + rect.width / 2;
+          const startY = rect.top + rect.height / 2;
+
+          petal.style.left = startX + "px";
+          petal.style.top = startY + "px";
+
+          // Tạo gió ngẫu nhiên (bay chéo)
+          petal.style.setProperty("--wind1", `${-20 + Math.random() * 40}px`);
+          petal.style.setProperty("--wind2", `${-40 + Math.random() * 80}px`);
+          petal.style.setProperty("--wind3", `${-60 + Math.random() * 120}px`);
+          petal.style.setProperty("--wind4", `${-80 + Math.random() * 160}px`);
+          petal.style.setProperty("--wind5", `${-100 + Math.random() * 200}px`);
+
+          petal.style.animation = `petalFall ${
+            3 + Math.random() * 2
+          }s ease-in forwards`;
+          petal.style.transform = `scale(${0.6 + Math.random() * 0.8})`;
+
+          document.body.appendChild(petal);
+
+          setTimeout(() => {
+            petal.remove();
+          }, 5000);
+        }
+      }
+      function createFloatingImages() {
+        const images = [
+          "image/image copy.png",
+          "image/image copy 2.png",
+          "image/image copy 3.png",
+          "image/image copy 4.png",
+          "image/image copy 5.png",
+          "image/image copy 6.png",
+          "image/image copy 7.png",
+        ];
+
+        for (let i = 0; i < 15; i++) {
+          const img = document.createElement("img");
+          img.className = "floating-image";
+          img.src = images[Math.floor(Math.random() * images.length)];
+
+          // random vị trí ngang
+          img.style.left = Math.random() * 100 + "vw";
+
+          // random tốc độ bay
+          img.style.animationDuration = 2 + Math.random() * 1 + "s";
+
+          // random delay để không bay cùng lúc
+          img.style.animationDelay = Math.random() * 10 + "s";
+
+          // random kích thước
+          img.style.width = 10 + Math.random() * 20 + "px";
+
+          document.body.appendChild(img);
+        }
+      }
+
+      function goToMenu() {
+        app.classList.remove("app-lock");
+        app.classList.add("app-menu");
+
+        if (progressMenu) {
+          progressMenu.style.transform = "scaleX(0.8)";
+        }
+      }
+
+      // ====== MUSIC PLAYER ======
+      const tracks = [
+        {
+          title: "Đơn Giản Anh Yêu Em",
+          src: "music/don-gian-anh-yeu-em.mp3",
+          cover: "image/image.png",
+        },
+        {
+          title: "Làm Vợ Anh Nhé",
+          src: "music/lam-vo-anh-nhe.mp3",
+          cover: "image/image.png",
+        },
+        {
+          title: "Ngày Hạnh Phúc",
+          src: "music/ngay-hanh-phuc.mp3",
+          cover: "image/image.png",
+        },
+      ];
+
+      let currentIndex = 0;
+      let isPlaying = false;
+
+      function renderPlaylist() {
+        playlistEl.innerHTML = "";
+        tracks.forEach((track, index) => {
+          const li = document.createElement("li");
+          li.className =
+            "playlist-item" + (index === currentIndex ? " active" : "");
+          li.dataset.index = index;
+          li.innerHTML = `
+            <div class="playlist-thumb"></div>
+            <div class="playlist-title">${track.title}</div>
+          `;
+          playlistEl.appendChild(li);
+        });
+      }
+
+      function loadTrack(index) {
+        const track = tracks[index];
+        if (!track) return;
+        currentIndex = index;
+        audio.src = track.src;
+        trackTitle.textContent = track.title;
+        musicCover.src = track.cover;
+        renderPlaylist();
+      }
+
+      function formatTime(sec) {
+        if (!sec || isNaN(sec)) return "0:00";
+        const minutes = Math.floor(sec / 60);
+        const seconds = Math.floor(sec % 60)
+          .toString()
+          .padStart(2, "0");
+        return `${minutes}:${seconds}`;
+      }
+
+      function updatePlayButton() {
+        playPauseBtn.textContent = isPlaying ? "⏸" : "▶";
+      }
+
+      function playTrack() {
+        if (!audio.src) loadTrack(currentIndex);
+        audio
+          .play()
+          .then(() => {
+            isPlaying = true;
+            updatePlayButton();
+          })
+          .catch(() => {});
+      }
+
+      function pauseTrack() {
+        audio.pause();
+        isPlaying = false;
+        updatePlayButton();
+      }
+
+      function togglePlay() {
+        if (isPlaying) {
+          pauseTrack();
+        } else {
+          playTrack();
+        }
+      }
+
+      function nextTrack() {
+        const nextIndex = (currentIndex + 1) % tracks.length;
+        loadTrack(nextIndex);
+        playTrack();
+      }
+
+      function prevTrack() {
+        const prevIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+        loadTrack(prevIndex);
+        playTrack();
+      }
+
+      audio.addEventListener("loadedmetadata", () => {
+        durationEl.textContent = formatTime(audio.duration);
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        if (audio.duration) {
+          const ratio = audio.currentTime / audio.duration;
+          musicProgress.style.transform = `scaleX(${ratio})`;
+        }
+      });
+
+      audio.addEventListener("ended", nextTrack);
+
+      playPauseBtn.addEventListener("click", togglePlay);
+      nextBtn.addEventListener("click", nextTrack);
+      prevBtn.addEventListener("click", prevTrack);
+
+      playlistEl.addEventListener("click", (e) => {
+        const item = e.target.closest(".playlist-item");
+        if (!item) return;
+        const index = Number(item.dataset.index);
+        loadTrack(index);
+        playTrack();
+      });
+
+      function openMusic() {
+        app.classList.add("app-music");
+        if (!audio.src) {
+          loadTrack(currentIndex);
+        }
+      }
+
+      function closeMusicView() {
+        app.classList.remove("app-music");
+        pauseTrack();
+      }
+
+      closeMusic.addEventListener("click", closeMusicView);
+
+      // ====== LETTER VIEW ======
+      function openLetter() {
+        app.classList.add("app-letter");
+        pauseTrack();
+      }
+
+      function closeLetterView() {
+        app.classList.remove("app-letter");
+      }
+
+      closeLetter.addEventListener("click", closeLetterView);
+
+      // ====== IMAGE VIEW ======
+      function openImage() {
+        app.classList.add("app-image");
+        pauseTrack();
+      }
+
+      function closeImageView() {
+        app.classList.remove("app-image");
+        screenImage.classList.remove("show-viewer");
+      }
+
+      closeImage.addEventListener("click", closeImageView);
+
+      // phóng to ảnh trong gallery
+      const imageItems = document.querySelectorAll(".image-item img");
+      const imageViewer = document.getElementById("imageViewer");
+      const viewerImage = document.getElementById("viewerImage");
+      const closeImageViewer = document.getElementById("closeImageViewer");
+
+      // ====== GIFT VIEW / HEART CANVAS ======
+      const giftCanvas = document.getElementById("giftCanvas");
+      const giftCtx = giftCanvas.getContext("2d");
+      let giftAnimationId = null;
+      let heartParticles = [];
+
+      function resizeGiftCanvas() {
+        if (!giftCanvas) return;
+        const rect = giftCanvas.parentElement.getBoundingClientRect();
+        giftCanvas.width = rect.width * window.devicePixelRatio;
+        giftCanvas.height = rect.height * window.devicePixelRatio;
+        giftCtx.setTransform(
+          window.devicePixelRatio,
+          0,
+          0,
+          window.devicePixelRatio,
+          0,
+          0
+        );
+      }
+
+      // Tạo các điểm (block) nằm trên đường cong trái tim
+      function createHeartParticles() {
+        heartParticles = [];
+        const count = 2000;
+
+        for (let i = 0; i < count; i++) {
+          const t = Math.random() * Math.PI * 2;
+          // phương trình trái tim kinh điển
+          const x = 16 * Math.pow(Math.sin(t), 3);
+          const y =
+            13 * Math.cos(t) -
+            5 * Math.cos(2 * t) -
+            2 * Math.cos(3 * t) -
+            Math.cos(4 * t);
+
+          heartParticles.push({
+            x,
+            y: -y, // lật lại để đầu tim hướng lên
+            size: 1.5 + Math.random() * 1.8,
+            alpha: 0.7 + Math.random() * 0.3,
+            offset: Math.random() * 2000,
+          });
+        }
+      }
+
+      // Vẽ trái tim ở giữa khung, bằng nhiều block sáng
+      function drawHeartFrame(time) {
+        if (!giftCanvas) return;
+        const { width, height } = giftCanvas;
+        giftCtx.clearRect(0, 0, width, height);
+
+        const cx = width / 2.5;
+        const cy = height * 0.38; // căn tim đúng giữa khung theo chiều dọc
+        const scale = Math.min(width, height) / 60;
+
+        heartParticles.forEach((p) => {
+          const pulse = 1 + 0.08 * Math.sin((time + p.offset) * 0.0025);
+          const px = cx + p.x * scale * pulse;
+          const py = cy + p.y * scale * pulse;
+
+          const sparkle = 0.6 + 0.4 * Math.sin((time + p.offset) * 0.004);
+          // màu hồng sáng cho các block
+          giftCtx.fillStyle = `rgba(255, 130, 190, ${p.alpha * sparkle})`;
+          const s = p.size * pulse;
+          giftCtx.fillRect(px - s / 2, py - s / 2, s, s);
+        });
+      }
+
+      function animateHeart(time) {
+        drawHeartFrame(time || 0);
+        giftAnimationId = requestAnimationFrame(animateHeart);
+      }
+
+      function openGift() {
+        app.classList.add("app-gift");
+        pauseTrack();
+        if (!giftCanvas) return;
+        resizeGiftCanvas();
+        createHeartParticles();
+        cancelAnimationFrame(giftAnimationId);
+        giftAnimationId = requestAnimationFrame(animateHeart);
+      }
+
+      function closeGiftView() {
+        app.classList.remove("app-gift");
+        if (giftAnimationId) {
+          cancelAnimationFrame(giftAnimationId);
+          giftAnimationId = null;
+        }
+      }
+
+      closeGift.addEventListener("click", closeGiftView);
+
+      window.addEventListener("resize", () => {
+        if (screenGift && screenGift.offsetParent !== null) {
+          resizeGiftCanvas();
+          createHeartParticles();
+        }
+      });
+
+      menuCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          if (card.dataset.open === "music") openMusic();
+          if (card.dataset.open === "letter") openLetter();
+          if (card.dataset.open === "image") openImage();
+           if (card.dataset.open === "gift") openGift();
+        });
+      });
+
+      keypad.addEventListener("click", (e) => {
+        const key = e.target.closest(".key");
+        if (!key || key.classList.contains("key-empty")) return;
+
+        key.classList.add("pressed");
+        setTimeout(() => key.classList.remove("pressed"), 150);
+
+        const digit = key.dataset.key;
+        const isDelete = key.dataset.action === "delete";
+
+        if (isDelete) {
+          inputValue = inputValue.slice(0, -1);
+        } else if (digit) {
+          createPetalsFromButton(key, 10);
+          if (inputValue.length < 4) {
+            inputValue += digit;
+          }
+        }
+
+        birthInput.value = inputValue;
+
+        const ratio = inputValue.length / 4;
+        if (progressLock) {
+          progressLock.style.transform = `scaleX(${0.2 + ratio * 0.8})`;
+        }
+        if (inputValue.length === 4) {
+          createFloatingImages(); // tạo icon bay liên tục
+          setTimeout(goToMenu, 400);
+        }
+      });
+      // ===== LETTER VIEW + TYPEWRITER =====
+
+      const fullLetterText = `Nhân ngày 8-3, mình chúc bạn luôn giữ được sự dịu dàng và bình yên trong tâm hồn. Mong rằng mỗi ngày trôi qua đều mang đến cho bạn những điều nhỏ bé nhưng đủ làm trái tim mỉm cười — một buổi sáng nắng nhẹ, một lời hỏi han ấm áp, hay một khoảnh khắc khiến bạn thấy mình thật sự được trân trọng. Cảm ơn bạn vì đã luôn là chính mình, chân thành và tinh tế theo cách rất riêng. Chúc bạn hôm nay và cả những ngày sau luôn được yêu thương một cách trọn vẹn. 🌷`;
+
+      const fullSignText = "Happy Women's Day!♥";
+
+      const typingTextEl = document.getElementById("typingText");
+      const typingSignEl = document.getElementById("typingSign");
+
+      let typingTimeout;
+
+      function typeWriter(text, element, speed = 25, callback) {
+        element.textContent = "";
+        let i = 0;
+
+        function typing() {
+          if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            typingTimeout = setTimeout(typing, speed);
+          } else if (callback) {
+            callback();
+          }
+        }
+
+        typing();
+      }
+
+      function openLetter() {
+        app.classList.add("app-letter");
+        pauseTrack();
+
+        clearTimeout(typingTimeout);
+        typingTextEl.textContent = "";
+        typingSignEl.textContent = "";
+
+        typeWriter(fullLetterText, typingTextEl, 20, () => {
+          typeWriter(fullSignText, typingSignEl, 40);
+        });
+      }
+
+      function closeLetterView() {
+        app.classList.remove("app-letter");
+        clearTimeout(typingTimeout);
+      }
+
+      closeLetter.addEventListener("click", closeLetterView);
+
+      // xử lý click ảnh trong gallery
+      imageItems.forEach((img) => {
+        img.addEventListener("click", () => {
+          viewerImage.src = img.src;
+          screenImage.classList.add("show-viewer");
+        });
+      });
+
+      closeImageViewer.addEventListener("click", () => {
+        screenImage.classList.remove("show-viewer");
+      });
+    </script>
+  </body>
+</html>
