@@ -604,9 +604,10 @@
         const { width, height } = giftCanvas;
         giftCtx.clearRect(0, 0, width, height);
 
-        const cx = width / 2.5;
-        const cy = height * 0.38; // căn tim đúng giữa khung theo chiều dọc
-        const scale = Math.min(width, height) / 60;
+        // Thu nhỏ + đưa tim lên góc trên trái (phù hợp màn hình điện thoại)
+        const cx = width * 0.22;
+        const cy = height * 0.26;
+        const scale = Math.min(width, height) / 95;
 
         heartParticles.forEach((p) => {
           const pulse = 1 + 0.08 * Math.sin((time + p.offset) * 0.0025);
