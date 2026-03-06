@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
@@ -203,7 +203,7 @@
                   <img src="image/image copy 4.png" alt="Ảnh 4" />
                 </figure>
               </div>
-              
+
               <div class="image-row image-row-bottom">
                 <figure class="image-item">
                   <img src="image/image copy 5.png" alt="Ảnh 5" />
@@ -569,7 +569,7 @@
           0,
           window.devicePixelRatio,
           0,
-          0
+          0,
         );
       }
 
@@ -600,14 +600,15 @@
 
       // Vẽ trái tim ở giữa khung, bằng nhiều block sáng
       function drawHeartFrame(time) {
-        if (!giftCanvas) return;
-        const { width, height } = giftCanvas;
+        const rect = giftCanvas.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+
         giftCtx.clearRect(0, 0, width, height);
 
-        // Thu nhỏ + đưa tim lên góc trên trái (phù hợp màn hình điện thoại)
-        const cx = width * 0.22;
-        const cy = height * 0.26;
-        const scale = Math.min(width, height) / 95;
+        const cx = width * 0.5; // giữa màn hình
+        const cy = height * 0.4; // hơi lên trên
+        const scale = Math.min(width, height) / 40;
 
         heartParticles.forEach((p) => {
           const pulse = 1 + 0.08 * Math.sin((time + p.offset) * 0.0025);
@@ -615,8 +616,8 @@
           const py = cy + p.y * scale * pulse;
 
           const sparkle = 0.6 + 0.4 * Math.sin((time + p.offset) * 0.004);
-          // màu hồng sáng cho các block
-          giftCtx.fillStyle = `rgba(255, 130, 190, ${p.alpha * sparkle})`;
+
+          giftCtx.fillStyle = `rgba(255,130,190,${p.alpha * sparkle})`;
           const s = p.size * pulse;
           giftCtx.fillRect(px - s / 2, py - s / 2, s, s);
         });
@@ -659,7 +660,7 @@
           if (card.dataset.open === "music") openMusic();
           if (card.dataset.open === "letter") openLetter();
           if (card.dataset.open === "image") openImage();
-           if (card.dataset.open === "gift") openGift();
+          if (card.dataset.open === "gift") openGift();
         });
       });
 
